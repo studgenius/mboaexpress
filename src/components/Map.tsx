@@ -51,18 +51,6 @@ const Map = ({ fullScreen = false }: { fullScreen?: boolean }) => {
   });
 
   useEffect(() => {
-    console.log("USER LOCATION:", {
-      userLatitude,
-      userLongitude,
-    });
-
-    console.log("DESTINATION:", {
-      destinationLatitude,
-      destinationLongitude,
-    });
-  }, [userLatitude, userLongitude, destinationLatitude, destinationLongitude]);
-
-  useEffect(() => {
     if (!Array.isArray(drivers)) return;
     if (!hasUserLocation) return;
 
