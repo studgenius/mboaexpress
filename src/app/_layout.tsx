@@ -5,13 +5,58 @@ import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
+import { View, Text, StyleSheet } from "react-native";
 
 import { ClerkProvider, ClerkLoaded } from "@clerk/expo";
 import { tokenCache } from "@clerk/expo/token-cache";
 
-const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY!;
+const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY;
 
 SplashScreen.preventAutoHideAsync();
+
+function ConfigErrorScreen() {
+  return (
+    <View style={styles.container}>
+      <View style={styles.card}>
+        <Text style={styles.title}>Configuration incomplète</Text>
+        <Text style={styles.message}>
+          La clé d&apos;authentification (Clerk) n&apos;est pas configurée.
+          Ajoutez EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY dans les variables
+          d&apos;environnement pour activer la connexion.
+        </Text>
+      </View>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#f6f8f9",
+    padding: 24,
+  },
+  card: {
+    backgroundColor: "#ffffff",
+    borderRadius: 16,
+    padding: 24,
+    maxWidth: 360,
+    width: "100%",
+  },
+  title: {
+    fontSize: 18,
+    fontFamily: "Jakarta-Bold",
+    color: "#1a1a1a",
+    marginBottom: 8,
+  },
+  message: {
+    fontSize: 14,
+    fontFamily: "Jakarta",
+    color: "#666666",
+    lineHeight: 20,
+  },
+});
 
 export default function RootLayout(): React.JSX.Element | null {
   const [loaded] = useFonts({
@@ -24,10 +69,6 @@ export default function RootLayout(): React.JSX.Element | null {
     "Jakarta-SemiBold": require("../../assets/fonts/PlusJakartaSans-SemiBold.ttf"),
   });
 
-  if (!publishableKey) {
-    throw new Error("Add your Clerk Publishable Key to the .env file");
-  }
-
   useEffect(() => {
     if (loaded) {
       SplashScreen.hideAsync();
@@ -36,6 +77,10 @@ export default function RootLayout(): React.JSX.Element | null {
 
   if (!loaded) {
     return null;
+  }
+
+  if (!publishableKey) {
+    return <ConfigErrorScreen />;
   }
 
   return (

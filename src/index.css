@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root { font-family: 'DM Sans', sans-serif; color: #102b32; background: #f6f8f9; font-synthesis: none; }
+.font-display { font-family: 'Space Grotesk', sans-serif; }
+* { box-sizing: border-box; }
+body { margin: 0; min-width: 320px; -webkit-tap-highlight-color: transparent; }
+button, input, select, textarea { font: inherit; }
+button { cursor: pointer; }
+
+/* Mobile safe area support */
+@supports (padding: env(safe-area-inset-bottom)) {
+  .safe-bottom { padding-bottom: env(safe-area-inset-bottom); }
+}
+
+/* Prevent text selection on buttons for better mobile UX */
+button { -webkit-user-select: none; user-select: none; }
+
+/* Smooth scrolling for mobile */
+* { -webkit-overflow-scrolling: touch; }
+
+/* Larger touch targets on mobile */
+@media (max-width: 768px) {
+  button, a { min-height: 36px; }
+  input, select, textarea { font-size: 16px; }
+}
+
+/* Hide scrollbar but keep functionality */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
