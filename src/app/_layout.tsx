@@ -20,9 +20,9 @@ function ConfigErrorScreen() {
       <View style={styles.card}>
         <Text style={styles.title}>Configuration incomplète</Text>
         <Text style={styles.message}>
-          La clé d'authentification (Clerk) n'est pas configurée.
+          La clé d&apos;authentification (Clerk) n&apos;est pas configurée.
           Ajoutez EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY dans les variables
-          d'environnement pour activer la connexion.
+          d&apos;environnement pour activer la connexion.
         </Text>
       </View>
     </View>
