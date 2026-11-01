@@ -3,6 +3,7 @@
   "main": "expo-router/entry",
   "version": "1.0.0",
   "dependencies": {
+    "@clerk/backend": "^3.23.2",
     "@clerk/expo": "^4.6.8",
     "@expo/metro-runtime": "~57.0.15",
     "@expo/ui": "~57.0.18",
