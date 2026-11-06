@@ -47,6 +47,7 @@ declare interface Ride {
   payment_status: string;
   driver_id: number;
   user_id: string;
+  payment_intent_id?: string | null;
   created_at: string;
   driver: {
     first_name: string;

@@ -1,6 +1,6 @@
 import * as SecureStore from "expo-secure-store";
 
-import { fetchAPI } from "./fetch";
+import { authFetch, type TokenGetter } from "./fetch";
 
 export const tokenCache = {
   async getToken(key: string) {
@@ -32,7 +32,7 @@ export const tokenCache = {
   },
 };
 
-export const googleSSO = async (startSSOFlow: any) => {
+export const googleSSO = async (startSSOFlow: any, getToken: TokenGetter) => {
   try {
     const { createdSessionId, setActive, signUp } = await startSSOFlow({
       strategy: "oauth_google",
@@ -61,11 +61,8 @@ export const googleSSO = async (startSSOFlow: any) => {
     // Create your application user only when this
     // was actually a new Clerk signup.
     if (signUp?.createdUserId) {
-      await fetchAPI("/(api)/user", {
+      await authFetch("/(api)/user", getToken, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
         body: JSON.stringify({
           name: `${signUp.firstName ?? ""} ${signUp.lastName ?? ""}`.trim(),
           email: signUp.emailAddress,

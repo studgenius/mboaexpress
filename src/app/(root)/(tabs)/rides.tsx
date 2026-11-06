@@ -3,13 +3,13 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import RideCard from "../../../../components/RideCard";
 import { images } from "@/constants";
 import { useUser } from "@clerk/expo";
-import { useFetch } from "../../../../lib/fetch";
+import { useAuthFetch } from "../../../../lib/fetch";
 import { Ride } from "../../../../types/type";
 
 const Rides = () => {
   const { user } = useUser();
-  const { data: recentRides, loading } = useFetch<Ride[]>(
-    `/(api)/ride/${user?.id}`,
+  const { data: recentRides, loading } = useAuthFetch<Ride[]>(
+    user?.id ? `/(api)/ride/${user.id}` : "",
   );
   return (
     <SafeAreaView>

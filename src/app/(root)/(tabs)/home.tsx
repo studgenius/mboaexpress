@@ -20,7 +20,7 @@ import GoogleTextInput from "@/components/GoogleTextInput";
 import Map from "@/components/Map";
 import RideCard from "../../../../components/RideCard";
 import { useLocationStore } from "../../../../store";
-import { useFetch } from "../../../../lib/fetch";
+import { useAuthFetch } from "../../../../lib/fetch";
 import type { Ride } from "../../../../types/type";
 
 export default function Page() {
@@ -34,7 +34,7 @@ export default function Page() {
   const [isSigningUp, setIsSigningUp] = useState(false);
   const [locationLoading, setLocationLoading] = useState(false);
 
-  const { data: recentRides, loading } = useFetch<Ride[]>(
+  const { data: recentRides, loading } = useAuthFetch<Ride[]>(
     user?.id ? `/(api)/ride/${user.id}` : "",
   );
 

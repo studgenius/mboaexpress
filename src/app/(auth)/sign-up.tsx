@@ -7,12 +7,13 @@ import { icons, images } from "@/constants";
 import CustomButton from "../../../components/CustomButton";
 import { Link, router } from "expo-router";
 import OAuth from "../../../components/OAuth";
-import { useSignUp } from "@clerk/expo";
+import { useSignUp, useAuth } from "@clerk/expo";
 import { ReactNativeModal } from "react-native-modal";
-import { fetchAPI } from "../../../lib/fetch";
+import { authFetch } from "../../../lib/fetch";
 
 const SignUp = () => {
   const { signUp } = useSignUp();
+  const { getToken } = useAuth();
 
   const [showSuccessModal, setShowSuccessModal] = useState(false);
 
@@ -122,11 +123,8 @@ const SignUp = () => {
       }
 
       // Then create your database user
-      await fetchAPI("/(api)/user", {
+      await authFetch("/(api)/user", getToken, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
         body: JSON.stringify({
           name: form.name,
           email: form.email,

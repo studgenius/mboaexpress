@@ -1,6 +1,13 @@
 import { neon } from "@neondatabase/serverless";
+import { requireAuth } from "@/lib/server-auth";
 
 export async function GET(request: Request, { id }: { id: string }) {
+  const authUserId = await requireAuth(request);
+
+  if (authUserId instanceof Response) {
+    return authUserId;
+  }
+
   if (!id)
     return Response.json({ error: "Missing required fields" }, { status: 400 });
 
@@ -33,7 +40,7 @@ export async function GET(request: Request, { id }: { id: string }) {
         INNER JOIN
             drivers ON rides.driver_id = drivers.id
         WHERE 
-            rides.user_id = ${id}
+            rides.user_id = ${authUserId}
         ORDER BY 
             rides.created_at DESC;
     `;

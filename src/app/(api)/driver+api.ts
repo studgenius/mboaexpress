@@ -1,6 +1,13 @@
 import { neon } from "@neondatabase/serverless";
+import { requireAuth } from "@/lib/server-auth";
 
-export async function GET() {
+export async function GET(request: Request) {
+  const authResult = await requireAuth(request);
+
+  if (authResult instanceof Response) {
+    return authResult;
+  }
+
   try {
     const sql = neon(process.env.DATABASE_URL!);
 
